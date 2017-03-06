@@ -10,7 +10,7 @@ public class rCade_Login : MonoBehaviour
 
     #region Public Variables
     public bool IsGuest { get; private set; }
-    public int id;
+    public static string id;
     public string email;
     public string password;
     public string firstName;
@@ -52,7 +52,6 @@ public class rCade_Login : MonoBehaviour
         IsNewUser += CreateRcader;
         ReturningUser += LoginToRcade;
         //StartCoroutine(ReturnIsNewUser());
-
         if (autoLogin)
             AutoLogin();
     }
@@ -76,15 +75,17 @@ public class rCade_Login : MonoBehaviour
                 SA_StatusBar.text = "We are already connected";
                 // We are already connected so no need to connect again 
                 guiReferences.playerProfile.UpdateScreen();
+                StartCoroutine(ReturnIsNewUser());
                 return;
 
             }
             // if we are not connected then connect - Connect has a call back that will update the profile screen on success
             else if (GooglePlayConnection.State == GPConnectionState.STATE_DISCONNECTED)
             {
-                SA_StatusBar.text = "We are already connected";
+                SA_StatusBar.text += "We are trying to connect now ";
                 // We are already connected so no need to connect again 
                 GooglePlayConnection.Instance.Connect();
+                StartCoroutine(ReturnIsNewUser());
                 return;
             }
         }
@@ -93,7 +94,7 @@ public class rCade_Login : MonoBehaviour
         else
         {
             // Connect to google play
-            SA_StatusBar.text = "We Cannot connect as there is no network connection";
+            SA_StatusBar.text += "We Cannot connect as there is no network connection";
             LoadGuestAccount();
         }
     }
@@ -123,25 +124,25 @@ public class rCade_Login : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("googleID", googleID);
 
-        WWW login = new WWW("appatier.xyz/php/Connectivity/Login.php?googleID=" + googleID,form);
+        WWW login = new WWW("http://www.appatier.xyz/php/Connectivity/Login.php?googleID=" +'"'+googleID+'"',form);
 
         yield return login;
 
         if (!String.IsNullOrEmpty(login.error))
         {
             Debug.LogError("Error On Page : " + login.error);
-            SA_StatusBar.text = "Error on page : " + login.error;
+            SA_StatusBar.text += "Error on page : " + login.error;
         }
         else if (login.text.Length > 0)
         {
             Debug.Log("Result from server is : " + login.text);
-            SA_StatusBar.text = "Result from loging in is " + login.text;
+            SA_StatusBar.text += "Result from loging in is " + login.text;
             SavePlayerSession(login);
         }
         else
         {
             Debug.LogError("We got no responce from the server");
-            SA_StatusBar.text = "No responce from rcade server";
+            SA_StatusBar.text += "No responce from rcade server";
         }
     }
 
@@ -151,7 +152,7 @@ public class rCade_Login : MonoBehaviour
     public void Logout()
     {
         GooglePlayConnection.Instance.Disconnect();
-        SA_StatusBar.text = "We logged out";
+        SA_StatusBar.text += "We logged out";
         LoadGuestAccount();
         ClosePlayerSession();
         // Show that we logged out
@@ -159,7 +160,7 @@ public class rCade_Login : MonoBehaviour
 
     private void CreateRcader()
     {
-        SA_StatusBar.text = "Creating an rcader";
+        SA_StatusBar.text += "Creating an rcader";
         StartCoroutine(CreateNewUserAccount());
     }
     private IEnumerator CreateNewUserAccount()
@@ -168,19 +169,19 @@ public class rCade_Login : MonoBehaviour
         form.AddField("firstName", GooglePlayManager.Instance.player.name);
         form.AddField("googleID", GooglePlayManager.Instance.player.playerId);
 
-        WWW download = new WWW(url, form);
+        WWW download = new WWW("http://www.appatier.xyz/php/Connectivity/CreateUserAccount.php?firstName="+GooglePlayManager.Instance.player.name +"&googleID="+GooglePlayManager.Instance.player.playerId, form);
 
         yield return download;
 
         if (!string.IsNullOrEmpty(download.error))
         {
             Debug.LogError("We got an error from the server " + download.error);
-            SA_StatusBar.text = "Error on creating new player :: " + download.error;
+            SA_StatusBar.text += "Error on creating new player :: " + download.error;
         }
         else
         {
             Debug.Log("New Player Registered Successfully" + download.text);
-            SA_StatusBar.text = "New player created on DB" + download.text;
+            SA_StatusBar.text += "New player created on DB" + download.text;
         }
     }
 
@@ -188,8 +189,9 @@ public class rCade_Login : MonoBehaviour
     {
         SA_StatusBar.text = "Checking if is new user";
         WWWForm form = new WWWForm();
-        form.AddField("googleID", GooglePlayManager.Instance.player.playerId);
-        string url = "appatier.xyz/php/Connectivity/UserExists.php?googleID=" + GooglePlayManager.Instance.player.playerId;
+        string googleID = GooglePlayManager.Instance.player.playerId;
+        form.AddField("googleID", googleID);
+        string url = "http://www.appatier.xyz/php/Connectivity/UserExists.php?googleID="+'"'+googleID+'"';
         WWW download = new WWW(url, form);
 
         yield return download;
@@ -197,19 +199,22 @@ public class rCade_Login : MonoBehaviour
         if (!string.IsNullOrEmpty(download.error))
         {
             Debug.LogError("We got an error from the server " + download.error);
-            SA_StatusBar.text = "Error From Server is : " + download.error;
+            SA_StatusBar.text += "Error From Returning new user is : " + download.error;
         }
+        // BUG - For some reason it is returning text from the server 
+
         else if (download.text.Length > 0)
         {
+            SA_StatusBar.text = "::: " + download.text + " :::";
             if (ReturningUser != null)
                 ReturningUser();
-            SA_StatusBar.text = "We are a returning user";
+            SA_StatusBar.text += "We are a returning user";
         }
         else
         {
             if (IsNewUser != null)
                 IsNewUser();
-            SA_StatusBar.text = "We are a new user";
+            SA_StatusBar.text += "We are a new user";
         }
     }
     #endregion
@@ -223,7 +228,7 @@ public class rCade_Login : MonoBehaviour
         if (rCade_Connection.HasConnection)
         {
             GooglePlayConnection.Instance.Connect();
-            if (id == 0)
+            if (!string.IsNullOrEmpty(id))
             {
                 StartCoroutine(RcadeLogin());
             }
@@ -245,6 +250,7 @@ public class rCade_Login : MonoBehaviour
         if (result.IsSuccess)
         {
             SA_StatusBar.text = "We connected";
+            id = GooglePlayManager.Instance.player.playerId;
         }
         else
         {
@@ -256,6 +262,7 @@ public class rCade_Login : MonoBehaviour
     /// </summary>
     private void OnLoggedIn()
     {
+        id = GooglePlayManager.Instance.player.playerId;
         // Update the players profile page
         guiReferences.playerProfile.UpdateScreen();
         Debug.Log("We connected!");
@@ -275,9 +282,9 @@ public class rCade_Login : MonoBehaviour
     /// <param name="playerData">Player data.</param>
     private void SavePlayerSession(WWW playerData)
     {
-        id = int.Parse(playerData.text);
+        id = playerData.text;
         Debug.Log("Json is " + playerData.text);
-        PlayerPrefs.SetInt("PlayerID", id);
+        PlayerPrefs.SetString("PlayerID", id);
     }
     public void ClosePlayerSession()
     {

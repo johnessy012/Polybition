@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class WebService_Select_Team : MonoBehaviour {
     
     public int userTeam;
-    public int userRCadeID;
+    public string userRCadeID;
 //    public void SetPlayerData(int rcadeID, string googleiD, string first, string last, string email, string pass, int team, string locale, string nation)
 //    {
 //        userRCadeID = rcadeID;
@@ -31,8 +31,7 @@ public class WebService_Select_Team : MonoBehaviour {
     {
         StartCoroutine(WS_SelectTeam(userTeam));
     }
-
-    string teamURL;
+        
     private IEnumerator WS_SelectTeam(int teamID)
     {
         if (!PlayerPrefs.HasKey("PlayerID"))
@@ -40,27 +39,28 @@ public class WebService_Select_Team : MonoBehaviour {
             Debug.LogError("We do not have a players ID to contact the DB - Either log in then call this method or something else has gone wrong");
             yield break;
         }
+
         userTeam = teamID;
-        userRCadeID = PlayerPrefs.GetInt("PlayerID");
-        teamURL = "appatier.xyz/php/Connectivity/SelectTeam.php?teamID=" + userTeam.ToString() + "&ID=" + userRCadeID.ToString();
+        string url = "http://www.appatier.xyz/php/Connectivity/SelectTeam.php?teamID=" + userTeam.ToString() + "&googleID=" + '"' +GooglePlayManager.Instance.player.playerId+'"';
         WWWForm form = new WWWForm();
-        form.AddField("ID", userRCadeID);
+        form.AddField("googleID", GooglePlayManager.Instance.player.playerId);
         form.AddField("teamID", userTeam);
-        WWW login = new WWW(teamURL);
+        WWW login = new WWW(url);
 
         yield return login;
 
         if (!String.IsNullOrEmpty(login.error))
         {
+            SA_StatusBar.text += "Error On Page : " + login.error;
             Debug.LogError("Error On Page : " + login.error);
         }
         else if (login.text.Length > 0)
         {
-            Debug.Log("Result from server is : " + login.text);
+            SA_StatusBar.text += "Result from server is : " + login.text;
         }
         else
         {
-            Debug.LogError("We got no responce from the server");
+            SA_StatusBar.text += "We got no responce from the server";
         }
     }
 }

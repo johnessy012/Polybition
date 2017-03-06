@@ -6,7 +6,6 @@ using UnityEngine.UI;
 //-- John Esslemont
 
 public class WebService_Send_Tokens : MonoBehaviour {
-    private int playerID;
     public int bronzeTokens, silverTokens, goldTokens, platinumTokens;
 
     #region Used Only For Deomstration UI
@@ -30,13 +29,6 @@ public class WebService_Send_Tokens : MonoBehaviour {
         platinumTokens = int.Parse(platinum.text);
     }
     #endregion
-    public void SetAllTokens(int bronze, int silver, int gold, int platinum)
-    {
-        bronzeTokens = bronze;
-        silverTokens = silver;
-        goldTokens = gold;
-        platinumTokens = platinum;
-    }
 
     public void SendTokens()
     {
@@ -51,29 +43,30 @@ public class WebService_Send_Tokens : MonoBehaviour {
             Debug.LogError("We do not have a players ID to contact the DB - Either log in then call this method or something else has gone wrong");
             yield break;
         }
-        playerID = PlayerPrefs.GetInt("PlayerID");
-        tokenURL = "appatier.xyz/php/Connectivity/PlayerTokens.php?bronzeTokens="+bronzeTokens.ToString()+"&silverTokens="+silverTokens.ToString()+"&goldTokens="+goldTokens.ToString()+"&platinumTokens="+platinumTokens.ToString()+"&ID="+playerID;
+        tokenURL = "http://www.appatier.xyz/php/Connectivity/PlayerTokens.php?bronzeTokens="+bronzeTokens.ToString()+"&silverTokens="+silverTokens.ToString()+"&goldTokens="+goldTokens.ToString()+"&platinumTokens="+platinumTokens.ToString()+"&googleID="+'"'+GooglePlayManager.Instance.player.playerId+'"';
         Debug.Log(tokenURL);
         WWWForm form = new WWWForm();
-        form.AddField("ID", playerID);
+        form.AddField("googleID", GooglePlayManager.Instance.player.playerId);
         form.AddField("bronzeTokens", bronzeTokens);
         form.AddField("silverTokens", silverTokens);
         form.AddField("goldTokens", goldTokens);
         form.AddField("platinumTokens", platinumTokens);
-        WWW login = new WWW(tokenURL);
+        WWW tokens = new WWW(tokenURL);
 
-        yield return login;
+        yield return tokens;
 
-        if (!String.IsNullOrEmpty(login.error))
+        if (!String.IsNullOrEmpty(tokens.error))
         {
-            Debug.LogError("Error On Page : " + login.error);
+            Debug.LogError("Error On Page : " + tokens.error);
         }
-        else if (login.text.Length > 0)
+        else if (tokens.text.Length > 0)
         {
-            Debug.Log("Result from server is : " + login.text);
+            SA_StatusBar.text += "Result from server is : " + tokens.text + "Google ID is " + GooglePlayManager.Instance.player.playerId;
+            Debug.Log("Result from server is : " + tokens.text);
         }
         else
         {
+            SA_StatusBar.text += "We got no responce from the server";
             Debug.LogError("We got no responce from the server");
         }
     }
