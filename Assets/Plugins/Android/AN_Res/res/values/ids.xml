@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+  <string name="app_id">1081389148742</string>
+  <string name="package_name">com.polybition.rcade</string>
+  <string name="achievement_become_an_rcader">CgkIxtTDvrwfEAIQAQ</string>
+  <string name="achievement_logged_in">CgkIxtTDvrwfEAIQAg</string>
+  <string name="achievement_choose_a_team">CgkIxtTDvrwfEAIQAw</string>
+  <string name="achievement_played_an_arcade_machine">CgkIxtTDvrwfEAIQBA</string>
+  <string name="achievement_where_im_at">CgkIxtTDvrwfEAIQBQ</string>
+  <string name="achievement_lets_look_the_part">CgkIxtTDvrwfEAIQBg</string>
+  <string name="achievement_welcome_back">CgkIxtTDvrwfEAIQBw</string>
+  <string name="achievement_invite_a_friend">CgkIxtTDvrwfEAIQCA</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+  <string name="app_id">428545903682</string>
+  <string name="package_name">com.polybition.test</string>
+  <string name="achievement_you_became_an_rcader">CgkIwpjOurwMEAIQBw</string>
+  <string name="achievement_logged_in">CgkIwpjOurwMEAIQCA</string>
+  <string name="achievement_where_im_at">CgkIwpjOurwMEAIQCQ</string>
+  <string name="achievement_achievement_hunter">CgkIwpjOurwMEAIQCg</string>
+  <string name="achievement_pick_a_side">CgkIwpjOurwMEAIQCw</string>
+  <string name="achievement_played_an_arcade_game">CgkIwpjOurwMEAIQDA</string>
+  <string name="achievement_got_me_some_tokens">CgkIwpjOurwMEAIQDQ</string>
+  <string name="leaderboard_test_boards">CgkIwpjOurwMEAIQAA</string>
+</resources>
