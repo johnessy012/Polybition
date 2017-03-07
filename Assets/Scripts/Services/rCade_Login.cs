@@ -10,7 +10,7 @@ public class rCade_Login : MonoBehaviour
 
     #region Public Variables
     public bool IsGuest { get; private set; }
-    public static string id;
+    public static string UserID;
     public string email;
     public string password;
     public string firstName;
@@ -20,35 +20,40 @@ public class rCade_Login : MonoBehaviour
 
     #region Private Variables
     private GUIReferenceManager guiReferences;
+    /// <summary>
+    /// Reference to the internet connection checker - Woould of made static but decided not too
+    /// </summary>
     private rCade_Connection internetConnection;
-    private string url;
     [SerializeField]
     private bool autoLogin = true;
 
+    /// <summary>
+    /// Actions for logging in and out
+    /// </summary>
     private Action IsNewUser;
     private Action ReturningUser;
     private Action OnLoggedIntoGoogle;
 
     #endregion
 
-    #region Local Variables
-    #endregion
-
     #region Built In Functions
 
     private void Awake()
     {
+        /// Can get rid of this when needs be
         if (!guiReferences)
             guiReferences = FindObjectOfType<GUIReferenceManager>();
     }
 
     private void Start()
     {
+        // Reference required to check connection status 
         internetConnection = FindObjectOfType<rCade_Connection>();
         /// Actions for async operations from google play 
         GooglePlayConnection.ActionPlayerConnected += OnLoggedIn;
         GooglePlayConnection.ActionPlayerDisconnected += OnPlayerLoggedOut;
         GooglePlayConnection.ActionConnectionResultReceived += ActionConnectionResultReceived;
+        // Action subscriptions for Rcade servers 
         IsNewUser += CreateRcader;
         ReturningUser += LoginToRcade;
         //StartCoroutine(ReturnIsNewUser());
@@ -228,7 +233,7 @@ public class rCade_Login : MonoBehaviour
         if (rCade_Connection.HasConnection)
         {
             GooglePlayConnection.Instance.Connect();
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(UserID))
             {
                 StartCoroutine(RcadeLogin());
             }
@@ -250,7 +255,7 @@ public class rCade_Login : MonoBehaviour
         if (result.IsSuccess)
         {
             SA_StatusBar.text = "We connected";
-            id = GooglePlayManager.Instance.player.playerId;
+            UserID = GooglePlayManager.Instance.player.playerId;
         }
         else
         {
@@ -262,11 +267,10 @@ public class rCade_Login : MonoBehaviour
     /// </summary>
     private void OnLoggedIn()
     {
-        id = GooglePlayManager.Instance.player.playerId;
+        UserID = GooglePlayManager.Instance.player.playerId;
         // Update the players profile page
         guiReferences.playerProfile.UpdateScreen();
-        Debug.Log("We connected!");
-        SA_StatusBar.text = "We have connected to google.....";
+        SA_StatusBar.text += "We have connected to google.....";
         StartCoroutine(ReturnIsNewUser());
     }
     /// <summary>
@@ -282,9 +286,9 @@ public class rCade_Login : MonoBehaviour
     /// <param name="playerData">Player data.</param>
     private void SavePlayerSession(WWW playerData)
     {
-        id = playerData.text;
+        UserID = playerData.text;
         Debug.Log("Json is " + playerData.text);
-        PlayerPrefs.SetString("PlayerID", id);
+        PlayerPrefs.SetString("PlayerID", UserID);
     }
     public void ClosePlayerSession()
     {
