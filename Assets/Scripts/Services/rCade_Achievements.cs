@@ -6,15 +6,6 @@ using UnityEngine;
 
 public class rCade_Achievements : MonoBehaviour {
 
-    #region Public Variables
-    #endregion
-
-    #region Private Variables
-    #endregion
-
-    #region Local Variables
-    #endregion
-
     #region Built In Functions
     private void Start()
     {
@@ -34,6 +25,16 @@ public class rCade_Achievements : MonoBehaviour {
         Debug.Log("Showing the achievements");
     }
 
+    public void UnlockAchievementByID(string id)
+    {
+        GooglePlayManager.Instance.UnlockAchievementById(id);
+    }
+
+    public void AddToIncrementalAchievement(int value, string id)
+    {
+        GooglePlayManager.Instance.IncrementAchievementById(id, value);
+    }
+
     /// <summary>
     /// Async method that is called when we get a response from google with acehievements
     /// </summary>
@@ -43,8 +44,5 @@ public class rCade_Achievements : MonoBehaviour {
         AN_PoupsProxy.showMessage("Achievment Updated ", "Id: " + result.achievementId + "\n status: " + result.Message);
     }
 
-    #endregion
-
-    #region Utility Functions
     #endregion
 }

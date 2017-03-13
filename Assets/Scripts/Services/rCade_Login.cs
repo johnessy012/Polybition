@@ -10,7 +10,9 @@ public class rCade_Login : MonoBehaviour
 
     #region Public Variables
     public bool IsGuest { get; private set; }
+    // Set by google and used by Rcade servers 
     public static string UserID;
+    // User information 
     public string email;
     public string password;
     public string firstName;
@@ -19,12 +21,14 @@ public class rCade_Login : MonoBehaviour
     #endregion
 
     #region Private Variables
+    // Can get rid of this - Not needed 
     private GUIReferenceManager guiReferences;
     /// <summary>
     /// Reference to the internet connection checker - Woould of made static but decided not too
     /// </summary>
     private rCade_Connection internetConnection;
     [SerializeField]
+    ///Should we auto login?
     private bool autoLogin = true;
 
     /// <summary>
@@ -49,7 +53,7 @@ public class rCade_Login : MonoBehaviour
     {
         // Reference required to check connection status 
         internetConnection = FindObjectOfType<rCade_Connection>();
-        /// Actions for async operations from google play 
+        // Actions for async operations from google play 
         GooglePlayConnection.ActionPlayerConnected += OnLoggedIn;
         GooglePlayConnection.ActionPlayerDisconnected += OnPlayerLoggedOut;
         GooglePlayConnection.ActionConnectionResultReceived += ActionConnectionResultReceived;
@@ -65,7 +69,7 @@ public class rCade_Login : MonoBehaviour
 
     #region Main Functions
     /// <summary>
-    /// Login with google play - 
+    /// Login with google play - This also logs into rcade or creates a new account on Rcade
     /// </summary>
     public void GoogleLogin()
     {
@@ -94,8 +98,6 @@ public class rCade_Login : MonoBehaviour
                 return;
             }
         }
-        // JOHN - This does not make sense, if you have no connection you are trying to connect to google. 
-        // JOHN - If there is no connection then load the guest account - Else if there is a connection and you are not connected to google, then connec to google
         else
         {
             // Connect to google play
@@ -115,12 +117,15 @@ public class rCade_Login : MonoBehaviour
         SA_StatusBar.text = "Guestt Mode";
     }
 
+    /// <summary>
+    /// Used by GoogleLogin 
+    /// </summary>
     private void LoginToRcade()
     {
         StartCoroutine(RcadeLogin());
     }
     /// <summary>
-    /// Logs into the rcade servers
+    /// Logs into the rcade servers from GoogleLogin
     /// </summary>
     /// <returns>The login.</returns>
     public IEnumerator RcadeLogin()
@@ -168,6 +173,10 @@ public class rCade_Login : MonoBehaviour
         SA_StatusBar.text += "Creating an rcader";
         StartCoroutine(CreateNewUserAccount());
     }
+    /// <summary>
+    /// Creates a new user account n Rcade Servers 
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CreateNewUserAccount()
     {
         WWWForm form = new WWWForm();
@@ -189,7 +198,10 @@ public class rCade_Login : MonoBehaviour
             SA_StatusBar.text += "New player created on DB" + download.text;
         }
     }
-
+    /// <summary>
+    /// Checks if we are a new user or not 
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator ReturnIsNewUser()
     {
         SA_StatusBar.text = "Checking if is new user";
@@ -267,6 +279,9 @@ public class rCade_Login : MonoBehaviour
     /// </summary>
     private void OnLoggedIn()
     {
+        // Set the user ID -
+        // BUG - Sometimes when the player is logged in this is not set, so i believe this is only called when the player actually logs in
+        // So for now if you need the ID use --> GooglePlayManager.Instance.Player.playerid;
         UserID = GooglePlayManager.Instance.player.playerId;
         // Update the players profile page
         guiReferences.playerProfile.UpdateScreen();

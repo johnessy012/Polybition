@@ -7,31 +7,26 @@ using UnityEngine.UI;
 
 public class WebService_Select_Team : MonoBehaviour {
     
+    // Chosen Team 
     public int userTeam;
-    public string userRCadeID;
-//    public void SetPlayerData(int rcadeID, string googleiD, string first, string last, string email, string pass, int team, string locale, string nation)
-//    {
-//        userRCadeID = rcadeID;
-//        userGoogleID = googleiD;
-//        userFirstName = first;
-//        userLastName = last;
-//        userEmail = email;
-//        userPassword = pass;
-//        userTeam = team;
-//        userNation = nation;
-//        userLocale = locale;
-//    }
-
+    // Set the chosen team - Used by GUI
     public void SetTeam(int team)
     {
         userTeam = team;
     }
-
+    /// <summary>
+    /// This starts the process of sending the chosen toeam to the server.
+    /// </summary>
     public void SelectTeam()
     {
         StartCoroutine(WS_SelectTeam(userTeam));
     }
-        
+    
+    /// <summary>
+    /// Send chosen team to the server with the ID of the players google account
+    /// </summary>
+    /// <param name="teamID"></param>
+    /// <returns></returns>
     private IEnumerator WS_SelectTeam(int teamID)
     {
         if (!PlayerPrefs.HasKey("PlayerID"))

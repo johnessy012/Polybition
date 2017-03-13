@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 //-- John Esslemont
-
+// DEPRICATED - Built into Login now - Keeping for reference
 public class rCade_CreatUser : MonoBehaviour {
 
     #region Public Variables

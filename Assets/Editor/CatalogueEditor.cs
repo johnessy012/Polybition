@@ -109,9 +109,11 @@ public class CatalogueEditor : EditorWindow {
                 GUILayout.EndHorizontal();
 
                 inventoryItemList.itemList[viewIndex - 1].itemName = EditorGUILayout.TextField("Item Name", inventoryItemList.itemList[viewIndex - 1].itemName as string);
+                inventoryItemList.itemList[viewIndex - 1].itemThumb = EditorGUILayout.ObjectField("Item Thumb", inventoryItemList.itemList[viewIndex - 1].itemThumb, typeof(Texture2D), false) as Texture2D;
                 inventoryItemList.itemList[viewIndex - 1].itemIcon = EditorGUILayout.ObjectField("Item Icon", inventoryItemList.itemList[viewIndex - 1].itemIcon, typeof(Texture2D), false) as Texture2D;
                 inventoryItemList.itemList[viewIndex - 1].databaseID = EditorGUILayout.TextField("Database ID", inventoryItemList.itemList[viewIndex - 1].databaseID as string);
-
+                inventoryItemList.itemList[viewIndex - 1].shortDescripion = EditorGUILayout.TextField("Short Description", inventoryItemList.itemList[viewIndex - 1].shortDescripion as string);
+                inventoryItemList.itemList[viewIndex - 1].fullDescription = EditorGUILayout.TextField("Full Description", inventoryItemList.itemList[viewIndex - 1].fullDescription as string);
                 GUILayout.Space(10);
 
                 GUILayout.BeginHorizontal();
@@ -133,6 +135,10 @@ public class CatalogueEditor : EditorWindow {
                 GUILayout.Space(10);
 
                 GUI.color = Color.cyan;
+                if (GUILayout.Button("DOWNLOAD LATEST CATALOGUE."))
+                {
+                    Debug.Log("Downloading from http://appatier.xyz/Connectivity/Catalogue.php");
+                }
                 if (GUILayout.Button("UPLOAD."))
                 {
                     Debug.Log("Uploading to http://appatier.xyz/Connectivity/Catalogue.php");
