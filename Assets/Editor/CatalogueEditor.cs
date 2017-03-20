@@ -29,7 +29,7 @@ public class CatalogueEditor : EditorWindow {
     void OnGUI()
     {
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Inventory Item Editor", EditorStyles.boldLabel);
+        GUILayout.Label("Rcade Catalogue", EditorStyles.boldLabel);
         if (inventoryItemList != null)
         {
             if (GUILayout.Button("Show Item List"))
@@ -48,6 +48,23 @@ public class CatalogueEditor : EditorWindow {
             Selection.activeObject = inventoryItemList;
         }
         GUILayout.EndHorizontal();
+        GUILayout.BeginVertical();
+        GUI.color = Color.cyan;
+
+        if (GUILayout.Button("CONVERT TO JSON."))
+        {
+            ConvertToJson();
+        }
+        if (GUILayout.Button("DOWNLOAD LATEST CATALOGUE."))
+        {
+            DownloadCatalogue();
+        }
+        if (GUILayout.Button("UPLOAD."))
+        {
+            Debug.Log("Uploading to http://appatier.xyz/Connectivity/Catalogue.php");
+        }
+        GUI.color = Color.white;
+        GUILayout.EndVertical();
 
         if (inventoryItemList == null)
         {
@@ -109,11 +126,16 @@ public class CatalogueEditor : EditorWindow {
                 GUILayout.EndHorizontal();
 
                 inventoryItemList.itemList[viewIndex - 1].itemName = EditorGUILayout.TextField("Item Name", inventoryItemList.itemList[viewIndex - 1].itemName as string);
-                inventoryItemList.itemList[viewIndex - 1].itemThumb = EditorGUILayout.ObjectField("Item Thumb", inventoryItemList.itemList[viewIndex - 1].itemThumb, typeof(Texture2D), false) as Texture2D;
-                inventoryItemList.itemList[viewIndex - 1].itemIcon = EditorGUILayout.ObjectField("Item Icon", inventoryItemList.itemList[viewIndex - 1].itemIcon, typeof(Texture2D), false) as Texture2D;
+                //inventoryItemList.itemList[viewIndex - 1].itemThumb = EditorGUILayout.ObjectField("Item Thumb", inventoryItemList.itemList[viewIndex - 1].itemThumb, typeof(Texture2D), false) as Texture2D;
+                //inventoryItemList.itemList[viewIndex - 1].itemIcon = EditorGUILayout.ObjectField("Item Icon", inventoryItemList.itemList[viewIndex - 1].itemIcon, typeof(Texture2D), false) as Texture2D;
                 inventoryItemList.itemList[viewIndex - 1].databaseID = EditorGUILayout.TextField("Database ID", inventoryItemList.itemList[viewIndex - 1].databaseID as string);
                 inventoryItemList.itemList[viewIndex - 1].shortDescripion = EditorGUILayout.TextField("Short Description", inventoryItemList.itemList[viewIndex - 1].shortDescripion as string);
                 inventoryItemList.itemList[viewIndex - 1].fullDescription = EditorGUILayout.TextField("Full Description", inventoryItemList.itemList[viewIndex - 1].fullDescription as string);
+                inventoryItemList.itemList[viewIndex - 1].myMachine = (CatalogueItem.PrizeMachine)EditorGUILayout.EnumPopup(inventoryItemList.itemList[viewIndex - 1].myMachine);
+                //if(inventoryItemList.itemList[viewIndex - 1].itemThumb != null)
+                //    inventoryItemList.itemList[viewIndex - 1].itemThumbName = inventoryItemList.itemList[viewIndex - 1].itemThumb.name;
+                //if (inventoryItemList.itemList[viewIndex - 1].itemIcon != null)
+                //    inventoryItemList.itemList[viewIndex - 1].itemIconName = inventoryItemList.itemList[viewIndex - 1].itemThumb.name;
                 GUILayout.Space(10);
 
                 GUILayout.BeginHorizontal();
@@ -134,15 +156,6 @@ public class CatalogueEditor : EditorWindow {
 
                 GUILayout.Space(10);
 
-                GUI.color = Color.cyan;
-                if (GUILayout.Button("DOWNLOAD LATEST CATALOGUE."))
-                {
-                    Debug.Log("Downloading from http://appatier.xyz/Connectivity/Catalogue.php");
-                }
-                if (GUILayout.Button("UPLOAD."))
-                {
-                    Debug.Log("Uploading to http://appatier.xyz/Connectivity/Catalogue.php");
-                }
 
 
             }
@@ -199,6 +212,16 @@ public class CatalogueEditor : EditorWindow {
     void DeleteItem(int index)
     {
         inventoryItemList.itemList.RemoveAt(index);
+    }
+
+    void ConvertToJson()
+    {
+        ConvertCatalogueToJson.SaveAllItems(inventoryItemList);
+    }
+
+    void DownloadCatalogue()
+    {
+        ConvertCatalogueToJson.DownloadFile(inventoryItemList);
     }
 }
 
