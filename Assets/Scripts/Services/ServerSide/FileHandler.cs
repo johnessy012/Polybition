@@ -122,7 +122,6 @@ public class FileHandler : MonoBehaviour
 
     void AddDownloadedItems(string text, CatalogueList list)
     {
-        CatalogueList inventoryItemList = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/CatalogueItem.asset", typeof(CatalogueList)) as CatalogueList;
         JsonUtility.FromJsonOverwrite(text, list);
     }
 }

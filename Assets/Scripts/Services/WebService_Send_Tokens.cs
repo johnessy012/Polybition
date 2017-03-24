@@ -4,7 +4,8 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 //-- John Esslemont
-
+// -------- Still getting worke on (Was busy adding things like team tokens etc, so right now the structure is not here, its best not working with this
+// just now as the strcuture will change) - This may or may not work --------
 public class WebService_Send_Tokens : MonoBehaviour {
     public int bronzeTokens, silverTokens, goldTokens, platinumTokens;
 
@@ -38,12 +39,7 @@ public class WebService_Send_Tokens : MonoBehaviour {
     string tokenURL;
     private IEnumerator WS_SendTokens(int bronze, int sliver, int gold, int platinum)
     {
-        if (!PlayerPrefs.HasKey("PlayerID"))
-        {
-            Debug.LogError("We do not have a players ID to contact the DB - Either log in then call this method or something else has gone wrong");
-            yield break;
-        }
-        tokenURL = "http://www.appatier.xyz/php/Connectivity/PlayerTokens.php?bronzeTokens="+bronzeTokens.ToString()+"&silverTokens="+silverTokens.ToString()+"&goldTokens="+goldTokens.ToString()+"&platinumTokens="+platinumTokens.ToString()+"&googleID="+'"'+GooglePlayManager.Instance.player.playerId+'"';
+        tokenURL = "http://www.appatier.xyz/php/Connectivity/PlayerTokens.php?bronzeTokens="+bronzeTokens.ToString()+"&silverTokens="+silverTokens.ToString()+"&goldTokens="+goldTokens.ToString()+"&platinumTokens="+platinumTokens.ToString()+"&googleID="+'"'+GooglePlayManager.Instance.player.playerId+'"' + "&team"+WebService_Select_Team.userTeam;
         Debug.Log(tokenURL);
         WWWForm form = new WWWForm();
         form.AddField("googleID", GooglePlayManager.Instance.player.playerId);
@@ -51,6 +47,7 @@ public class WebService_Send_Tokens : MonoBehaviour {
         form.AddField("silverTokens", silverTokens);
         form.AddField("goldTokens", goldTokens);
         form.AddField("platinumTokens", platinumTokens);
+        form.AddField("teamID", WebService_Select_Team.userTeam);
         WWW tokens = new WWW(tokenURL);
 
         yield return tokens;

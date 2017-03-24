@@ -9,6 +9,12 @@ using UnityEngine.UI;
 /// When you call TakeScreenShot it will automatically take a screen shot and save to the gallery. 
 /// 
 /// There are also events that you can subscribe too, OnImagePicked, OnImageSaved if you need to find out when this happens. 
+/// 
+/// To Take a screen shot call TakeScreenShot()
+/// 
+/// To Open the gallery on device call OpenGallery()
+/// 
+/// To Save the screen shot to the gallery call SaveScreenShotToGallary() Although im not sure this is 100% needed as im sure it saves anyway 
 /// </summary>
 public class rCade_Gallary : MonoBehaviour {
 

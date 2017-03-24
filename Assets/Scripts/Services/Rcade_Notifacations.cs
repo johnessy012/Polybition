@@ -4,7 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 //-- John Esslemont
 
-public class Rcade_Notifacations : MonoBehaviour {
+/// <summary>
+/// This is for notifcations on android - I created a simple class that will aloow us to create any type of notifacation we like. 
+/// To use this all you need to do is create a notifacation in the editor, Then call ShowLocalNotifacation() with the id of the notifacation. 
+/// This will then send the notifaction to the users device and will wait to be triggered. 
+/// </summary>
+public class rCade_Notifacations : MonoBehaviour
+{
 
     #region Public Variables
     #endregion

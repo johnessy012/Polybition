@@ -4,7 +4,7 @@ using System.Collections;
 using System;
 using AUP;
 
-public class TextToSpeechDemo : MonoBehaviour {
+public class rCade_TextToSpeech : MonoBehaviour {
 
 	private const string TAG = "[TextToSpeechDemo]: ";
 

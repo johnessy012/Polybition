@@ -32,17 +32,17 @@ public class CatalogueEditor : EditorWindow {
         GUILayout.Label("Rcade Catalogue", EditorStyles.boldLabel);
         if (inventoryItemList != null)
         {
-            if (GUILayout.Button("Show Item List"))
+            if (GUILayout.Button("Show Catalogue"))
             {
                 EditorUtility.FocusProjectWindow();
                 Selection.activeObject = inventoryItemList;
             }
         }
-        if (GUILayout.Button("Open Item List"))
+        if (GUILayout.Button("Open Catalogue"))
         {
-            OpenItemList();
+            OpenCatalogueList();
         }
-        if (GUILayout.Button("New Item List"))
+        if (GUILayout.Button("New Catalogue"))
         {
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = inventoryItemList;
@@ -51,17 +51,13 @@ public class CatalogueEditor : EditorWindow {
         GUILayout.BeginVertical();
         GUI.color = Color.cyan;
 
-        if (GUILayout.Button("CONVERT TO JSON."))
+        if (GUILayout.Button("UPLOAD."))
         {
-            ConvertToJson();
+            ConvertToJsonAndUpload();
         }
         if (GUILayout.Button("DOWNLOAD LATEST CATALOGUE."))
         {
             DownloadCatalogue();
-        }
-        if (GUILayout.Button("UPLOAD."))
-        {
-            Debug.Log("Uploading to http://appatier.xyz/Connectivity/Catalogue.php");
         }
         GUI.color = Color.white;
         GUILayout.EndVertical();
@@ -76,7 +72,7 @@ public class CatalogueEditor : EditorWindow {
             }
             if (GUILayout.Button("Open Existing Item List", GUILayout.ExpandWidth(false)))
             {
-                OpenItemList();
+                OpenCatalogueList();
             }
             GUILayout.EndHorizontal();
         }
@@ -185,7 +181,7 @@ public class CatalogueEditor : EditorWindow {
         }
     }
 
-    void OpenItemList()
+    void OpenCatalogueList()
     {
         string absPath = EditorUtility.OpenFilePanel("Select Inventory Item List", "", "");
         if (absPath.StartsWith(Application.dataPath))
@@ -214,7 +210,7 @@ public class CatalogueEditor : EditorWindow {
         inventoryItemList.itemList.RemoveAt(index);
     }
 
-    void ConvertToJson()
+    void ConvertToJsonAndUpload()
     {
         ConvertCatalogueToJson.SaveAllItems(inventoryItemList);
     }

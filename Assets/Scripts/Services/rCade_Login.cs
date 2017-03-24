@@ -5,6 +5,14 @@ using UnityEngine.UI;
 using System;
 //-- John Esslemont
 
+
+/// <summary>
+// This class will log the player into google, in the process it will create a new account on our servers passing in the google id which is used as a unique key.
+// If the player exists it will grab the data, if they do not it will create the player and then pull the data. 
+// 
+// To use this script all you need to do is call -> Login <-
+// I have also created a manager class called RcadeServices which is a singleton. So you can call this from anywhere
+/// </summary>
 public class rCade_Login : MonoBehaviour
 {
 
@@ -52,7 +60,6 @@ public class rCade_Login : MonoBehaviour
     private void Start()
     {
         // Reference required to check connection status 
-        internetConnection = FindObjectOfType<rCade_Connection>();
         // Actions for async operations from google play 
         GooglePlayConnection.ActionPlayerConnected += OnLoggedIn;
         GooglePlayConnection.ActionPlayerDisconnected += OnPlayerLoggedOut;
@@ -71,10 +78,10 @@ public class rCade_Login : MonoBehaviour
     /// <summary>
     /// Login with google play - This also logs into rcade or creates a new account on Rcade
     /// </summary>
-    public void GoogleLogin()
+    public void Login()
     {
         // Check if we arre connected to the net
-        internetConnection.CheckConnection();
+        RcadeServices.Instance.rcadeConnection.CheckConnection();
         // If we are then carry one
         if (rCade_Connection.HasConnection)
         {
@@ -148,6 +155,7 @@ public class rCade_Login : MonoBehaviour
             Debug.Log("Result from server is : " + login.text);
             SA_StatusBar.text += "Result from loging in is " + login.text;
             SavePlayerSession(login);
+            RcadeServices.Instance.rcadePlayerData.RetrievePlayerData();
         }
         else
         {
@@ -196,6 +204,7 @@ public class rCade_Login : MonoBehaviour
         {
             Debug.Log("New Player Registered Successfully" + download.text);
             SA_StatusBar.text += "New player created on DB" + download.text;
+            RcadeServices.Instance.rcadePlayerData.RetrievePlayerData();
         }
     }
     /// <summary>

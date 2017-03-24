@@ -13,7 +13,9 @@ using System;
     /// 
     // To enable call Enable
     /// 
-    // To check which connection type we have you would check currentConnection which is an enum 
+    // To check which connection type we have you would check currentConnection which returns an enum value
+    ///
+    // This class also has the information about the players connection types 
     /// </summary>
 public class rCade_Connection : MonoBehaviour {
 

@@ -4,7 +4,7 @@ using System.Collections;
 using System;
 using AUP;
 
-public class SpeechRecognizerDemo : MonoBehaviour {
+public class rCade_SpeechRecogniser : MonoBehaviour {
 
 	private const string TAG = "[SpeechRecognizerDemo]: ";
 

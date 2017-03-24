@@ -1,21 +1,8 @@
 {
     "itemList": [
         {
-            "databaseID": "",
-            "itemName": "Nathan",
-            "myMachine": 0,
-            "itemThumbName": "",
-            "itemIconName": "",
-            "shortDescripion": "This is the boss man ",
-            "fullDescription": "",
-            "priceInBronze": 0,
-            "priceInSilver": 0,
-            "priceInGold": 0,
-            "priceInPlatinum": 0
-        },
-        {
-            "databaseID": "",
-            "itemName": "",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -27,8 +14,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -40,8 +27,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -53,8 +40,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -66,8 +53,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -79,8 +66,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -92,8 +79,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -105,8 +92,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -118,8 +105,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "New Item",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -131,8 +118,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "New Item",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -144,8 +131,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "New Item",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -157,8 +144,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "New Item",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -170,8 +157,8 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "New Item",
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",
@@ -183,8 +170,21 @@
             "priceInPlatinum": 0
         },
         {
-            "databaseID": "",
-            "itemName": "New Item",
+            "databaseID": "Dommm",
+            "itemName": "John",
+            "myMachine": 0,
+            "itemThumbName": "",
+            "itemIconName": "",
+            "shortDescripion": "",
+            "fullDescription": "",
+            "priceInBronze": 0,
+            "priceInSilver": 0,
+            "priceInGold": 0,
+            "priceInPlatinum": 0
+        },
+        {
+            "databaseID": "Dommm",
+            "itemName": "John",
             "myMachine": 0,
             "itemThumbName": "",
             "itemIconName": "",

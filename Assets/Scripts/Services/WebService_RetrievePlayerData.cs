@@ -4,7 +4,12 @@ using UnityEngine;
 using System;
 //-- John Esslemont
 
-public class WebService_RetrievePlayerData : MonoBehaviour {
+// This class will pull all data about the player. To use this when you want data just call RetrievePlayerData
+// WARNINGS ** 
+// Player must of course be logged in. 
+// This gets called when they log in or we create a new account
+public class WebService_RetrievePlayerData : MonoBehaviour
+{
 
     #region Public Variables
 
@@ -23,7 +28,6 @@ public class WebService_RetrievePlayerData : MonoBehaviour {
     #endregion
 
     #region Private Variables
-    [SerializeField]
     #endregion
 
     #region Local Variables
@@ -37,27 +41,20 @@ public class WebService_RetrievePlayerData : MonoBehaviour {
     {
         StartCoroutine(WS_GetPlayerData());
     }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            RetrievePlayerData();
-        }
-    }
     #endregion
 
     #region Utility Functions
 
     private IEnumerator WS_GetPlayerData()
     {
+        // Ws trying to find out what this was 
         if (!PlayerPrefs.HasKey("PlayerID"))
         {
             Debug.LogError("We do not have a players ID to contact the DB - Either log in then call this method or something else has gone wrong");
             yield break;
         }
         userRCadeID = PlayerPrefs.GetInt("PlayerID");
-        string playerURL = "appatier.xyz/php/Connectivity/RetrievePlayerData.php?ID="+userRCadeID.ToString();
+        string playerURL = "appatier.xyz/php/Connectivity/RetrievePlayerData.php?ID=" + userRCadeID.ToString();
         WWWForm form = new WWWForm();
         WWW login = new WWW(playerURL);
 
@@ -99,7 +96,7 @@ public class WebService_RetrievePlayerData : MonoBehaviour {
     // Trim the [ & ] from the returned object from the server
     private string TrimEnds(string text)
     {
-        char[] ends = {'[', ']'};
+        char[] ends = { '[', ']' };
         string newText = text.TrimEnd(ends);
         string useText = newText.TrimStart(ends);
         return useText;
@@ -107,7 +104,7 @@ public class WebService_RetrievePlayerData : MonoBehaviour {
 
     #endregion
 }
-[Serializable]    
+[Serializable]
 public class PlayerData
 {
     public int ID;

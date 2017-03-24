@@ -5,10 +5,13 @@ using System;
 using UnityEngine.UI;
 //-- John Esslemont
 
-public class WebService_Select_Team : MonoBehaviour {
-    
+// To use this all you need to do is pass in the team the player choose to SetTeam() Then call SelectTeam() 
+// The php is still getting worked on to show errors later - 
+public class WebService_Select_Team : MonoBehaviour
+{
+
     // Chosen Team 
-    public int userTeam;
+    public static int userTeam;
     // Set the chosen team - Used by GUI
     public void SetTeam(int team)
     {
@@ -21,7 +24,7 @@ public class WebService_Select_Team : MonoBehaviour {
     {
         StartCoroutine(WS_SelectTeam(userTeam));
     }
-    
+
     /// <summary>
     /// Send chosen team to the server with the ID of the players google account
     /// </summary>
@@ -29,14 +32,8 @@ public class WebService_Select_Team : MonoBehaviour {
     /// <returns></returns>
     private IEnumerator WS_SelectTeam(int teamID)
     {
-        if (!PlayerPrefs.HasKey("PlayerID"))
-        {
-            Debug.LogError("We do not have a players ID to contact the DB - Either log in then call this method or something else has gone wrong");
-            yield break;
-        }
-
         userTeam = teamID;
-        string url = "http://www.appatier.xyz/php/Connectivity/SelectTeam.php?teamID=" + userTeam.ToString() + "&googleID=" + '"' +GooglePlayManager.Instance.player.playerId+'"';
+        string url = "http://www.appatier.xyz/php/Connectivity/SelectTeam.php?teamID=" + userTeam.ToString() + "&googleID=" + '"' + GooglePlayManager.Instance.player.playerId + '"';
         WWWForm form = new WWWForm();
         form.AddField("googleID", GooglePlayManager.Instance.player.playerId);
         form.AddField("teamID", userTeam);
